@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import HomeScreen from '../HomeScreen';
+import tw from 'twrnc';
 
 export default function Baitap1ProfileScreen() {
     const navigation = useNavigation();
@@ -16,37 +17,37 @@ export default function Baitap1ProfileScreen() {
 
 
     return (
-        <View style={styles.container}>
-            <Image source={require('../../../assets/Avatar.png')} style={styles.image} />
-            <View style={styles.viewProfile}>
-                {/* tạo thành dạng một bảng có 2 cột, cột trái là trường thuộc tính, cột phải là dữ liệu tương ứng */}
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
-                    <Text style={styles.text}>Họ và tên:</Text>
-                    <Text style={styles.text}>Nguyễn Trọng Phúc</Text>
+        <View style={tw`flex-1 bg-gray-200 items-center justify-center`}>
+            <Image source={require('../../../assets/Avatar.png')} style={tw`w-40 h-40 rounded-full shadow-lg`} />
+            <View style={tw`w-80 h-80 bg-gray-400 rounded-lg mt-5 p-4`}>
+                {/* Dạng bảng có 2 cột */}
+                <View style={tw`flex-row justify-between py-2`}>
+                    <Text style={tw`font-bold text-lg`}>Họ và tên:</Text>
+                    <Text style={tw`text-lg`}>Nguyễn Trọng Phúc</Text>
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
-                    <Text style={styles.text}>Ngày sinh:</Text>
-                    <Text style={styles.text}>01/01/2003</Text>
+                <View style={tw`flex-row justify-between py-2`}>
+                    <Text style={tw`font-bold text-lg`}>Ngày sinh:</Text>
+                    <Text style={tw`text-lg`}>01/01/2003</Text>
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
-                    <Text style={styles.text}>Số điện thoại:</Text>
-                    <Text style={styles.text}>0123456789</Text>
+                <View style={tw`flex-row justify-between py-2`}>
+                    <Text style={tw`font-bold text-lg`}>Số điện thoại:</Text>
+                    <Text style={tw`text-lg`}>0123456789</Text>
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
-                    <Text style={styles.text}>Email:</Text>
-                    <Text style={styles.text}>abcd@gmail.com</Text>
+                <View style={tw`flex-row justify-between py-2`}>
+                    <Text style={tw`font-bold text-lg`}>Email:</Text>
+                    <Text style={tw`text-lg`}>abcd@gmail.com</Text>
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
-                    <Text style={styles.text}>Học vấn:</Text>
-                    <Text style={[styles.text, styles.wrap]}>Trường Đại học Sư phạm kỹ thuật TP.HCM</Text>
+                <View style={tw`flex-row justify-between py-2`}>
+                    <Text style={tw`font-bold text-lg`}>Học vấn:</Text>
+                    <Text style={tw`text-lg flex-wrap w-40`}>Trường Đại học Sư phạm kỹ thuật TP.HCM</Text>
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
-                    <Text style={styles.text}>Khoa:</Text>
-                    <Text style={styles.text}>Công nghệ thông tin</Text>
+                <View style={tw`flex-row justify-between py-2`}>
+                    <Text style={tw`font-bold text-lg`}>Khoa:</Text>
+                    <Text style={tw`text-lg`}>Công nghệ thông tin</Text>
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
-                    <Text style={styles.text}>Niên khóa:</Text>
-                    <Text style={styles.text}>2021-2025</Text>
+                <View style={tw`flex-row justify-between py-2`}>
+                    <Text style={tw`font-bold text-lg`}>Niên khóa:</Text>
+                    <Text style={tw`text-lg`}>2021-2025</Text>
                 </View>
             </View>
         </View>

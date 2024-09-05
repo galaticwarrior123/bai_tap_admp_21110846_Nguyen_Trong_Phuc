@@ -1,12 +1,14 @@
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, StyleSheet, Text, TextInput, TouchableOpacity, View, Alert } from "react-native";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Alert } from "react-native";
+import AuthorAPI from "../../API/AuthorAPI";
+import tw from "twrnc";
 
-export default function Login() {
+export default function Login() {  // Receive onLoginSuccess as a prop
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigation = useNavigation();
+
     const handleLogin = async () => {
         // Call API to login
         const data = {
@@ -14,65 +16,92 @@ export default function Login() {
             password: password,
         };
 
-        const response = await fetch('http://10.0.2.2/api/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        });
+        console.log(data);
 
-        const result = await response.json();
+        try {
+            
+            const response = await AuthorAPI.Login(data);
 
-        if (response.ok) {
-            Alert.alert('Success', 'Đăng nhập thành công!');
-            navigation.navigate('Home'); // Navigate to login page if registration is successful
-        } else {
-            Alert.alert('Error', result.message || 'Đăng nhập thất bại');
+            if(response.status == 200) {
+                Alert.alert('Success', 'Đăng nhập thành công!');
+                // onLoginSuccess(); // Call onLoginSuccess when login is successful
+                navigation.navigate('HomeScreen'); // Navigate to home page if login is successful
+            } else {
+                Alert.alert('Error', 'Đăng nhập thất bại');
+            }
+        } catch (error) {
+            Alert.alert('Error', 'Không thể kết nối đến máy chủ');
         }
-
-    }
+    };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}> Login Page</Text>
-            <View style={styles.viewForm} >
-                <Text style={styles.text}>Email:</Text>
-                <TextInput style={styles.input} onChangeText={setEmail} placeholder="Nhập email" />
+        <View style={tw`flex-1 justify-center p-5`}>
+            <View style={tw`mt-5`}>
+                <Text style={tw`text-xl font-bold text-left`}>Email</Text>
+                <TextInput
+                    style={tw`border border-black rounded-lg h-10 p-2 mt-2`}
+                    onChangeText={setEmail}
+                    placeholder="Nhập email"
+                    value={email}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                />
             </View>
-            <View style={styles.viewForm} >
-                <Text style={styles.text}>Mật khẩu:</Text>
-                <TextInput style={styles.input} onChangeText={setPassword} placeholder="Nhập mật khẩu" />
+            <View style={tw`mt-5`}>
+                <Text style={tw`text-xl font-bold text-left`}>Mật khẩu:</Text>
+                <TextInput
+                    style={tw`border border-black rounded-lg h-10 p-2 mt-2`}
+                    onChangeText={setPassword}
+                    placeholder="Nhập mật khẩu"
+                    value={password}
+                    secureTextEntry
+                />
             </View>
-            <View style={styles.viewForm} >
+            <View style={tw`mt-5`}>
                 <Button title="Đăng nhập" onPress={handleLogin} />
             </View>
+            <View style={tw`mt-5 flex-row justify-center`}>
+                <Text style={tw`text-center`}>Chưa có tài khoản?</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+                    <Text style={tw`text-blue-500 ml-2`}>Đăng ký</Text>
+                </TouchableOpacity>
+            </View>
         </View>
-    )
-
+    );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    text: {
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
-    viewForm: {
-        flexDirection: 'row',
-        margin: 10,
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: 'black',
-        borderRadius: 5,
-        width: 200,
-        height: 40,
-        padding: 10,
-    },
-
-});
+// const styles = StyleSheet.create({
+//     container: {
+//         flex: 1,
+//         justifyContent: 'center',
+//         padding: 20,
+//     },
+//     text: {
+//         fontSize: 20,
+//         fontWeight: 'bold',
+//         textAlign: 'center',
+//     },
+//     viewForm: {
+//         marginTop: 20,
+//     },
+//     input: {
+//         borderWidth: 1,
+//         borderColor: 'black',
+//         borderRadius: 5,
+//         height: 40,
+//         padding: 10,
+//         marginTop: 5,
+//     },
+//     viewFormRedirect: {
+//         marginTop: 20,
+//         flexDirection: 'row',
+//         justifyContent: 'center',
+//     },
+//     textSpan: {
+//         textAlign: 'center',
+//     },
+//     textLink: {
+//         color: 'blue',
+//         marginLeft: 5,
+//     },
+// });

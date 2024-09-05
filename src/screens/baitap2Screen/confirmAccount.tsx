@@ -2,6 +2,7 @@ import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import { useState } from "react";
 import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import AuthorAPI from "../../API/AuthorAPI";
 export default function ConfirmAccount() {
     const [code, setCode] = useState('');
     const navigation = useNavigation();
@@ -13,21 +14,13 @@ export default function ConfirmAccount() {
         };
 
         try {
-            const response = await fetch('http://10.0.2.2:4000/api/auth/verify', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                
-            });
-    
-            const result = await response.json();
-    
-            if (response.ok) {
+            const response = await AuthorAPI.ConfirmAccount(data);
+
+            if(response.status == 200) {
                 Alert.alert('Success', 'Xác nhận thành công!');
-                navigation.navigate('Login'); // Navigate to login page if registration is successful
+                navigation.navigate('Login'); // Navigate to login page if confirmation is successful
             } else {
-                Alert.alert('Error', result.message || 'Xác nhận thất bại');
+                Alert.alert('Error', 'Xác nhận thất bại');
             }
         } catch (error) {
             Alert.alert('Error', 'Không thể kết nối đến máy chủ');

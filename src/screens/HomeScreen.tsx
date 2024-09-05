@@ -13,7 +13,7 @@ function HomeScreen({ navigation }: { navigation: NavigationProp<any> }) {
           <CustomButton onPress={() => navigation.navigate('Baitap1')} title="Bài tập 1" />
         </View>
         <View style={styles.viewButtons}>
-          <CustomButton onPress={() => navigation.navigate('Register')} title="Bài tập 2" />
+          <CustomButton onPress={() => navigation.navigate('Login')} title="Bài tập 2" />
         </View>
       </>
     );

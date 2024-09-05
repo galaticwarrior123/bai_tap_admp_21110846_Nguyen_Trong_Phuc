@@ -1,9 +1,11 @@
 import { Link } from "@react-navigation/native";
 import { Button, Linking, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-
+import AuthorAPI from "../../API/AuthorAPI";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Alert } from "react-native";
+import tw from "twrnc";
+
 export default function Register() {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -28,61 +30,81 @@ export default function Register() {
         };
 
         try {
-            const response = await fetch('http://10.0.2.2:4000/api/auth/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-    
-            const result = await response.json();
-    
-            if (response.ok) {
+            const response = await AuthorAPI.Register(data);
+
+            if(response.status == 200) {
                 Alert.alert('Success', 'Đăng ký thành công!');
-                navigation.navigate('ConfirmAccount'); // Navigate to login page if registration is successful
+                navigation.navigate('ConfirmAccount'); // Navigate to confirm account page if registration is successful
             } else {
-                Alert.alert('Error', result.message || 'Đăng ký thất bại');
+                Alert.alert('Error', 'Đăng ký thất bại');
             }
+
         } catch (error) {
             Alert.alert('Error', 'Không thể kết nối đến máy chủ');
         }
         
     }
-    const openURL = () => {
-        Linking.openURL('https://www.example.com');
-    };
+    
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}> Register Page</Text>
-            <View style={styles.viewForm} >
-                <Text style={styles.text}>Họ và tên lót:</Text>
-                <TextInput style={styles.input} onChangeText={setFirstName} placeholder="Nhập họ và tên" />
+        <View style={tw`flex-1 p-6`}>
+
+            
+            <View style={tw`mt-5`}>
+                <Text style={tw`text-lg font-bold text-left`}>Họ và tên lót:</Text>
+                <TextInput
+                    style={tw`border border-gray-300 rounded-lg p-2 mt-2`}
+                    onChangeText={setFirstName}
+                    placeholder="Nhập họ và tên"
+                />
             </View>
-            <View style={styles.viewForm} >
-                <Text style={styles.text}>Tên:</Text>
-                <TextInput style={styles.input} onChangeText={setLastName} placeholder="Nhập tên" />
+            
+            <View style={tw`mt-5`}>
+                <Text style={tw`text-lg font-bold text-left`}>Tên:</Text>
+                <TextInput
+                    style={tw`border border-gray-300 rounded-lg p-2 mt-2`}
+                    onChangeText={setLastName}
+                    placeholder="Nhập tên"
+                />
             </View>
-            <View style={styles.viewForm} >
-                <Text style={styles.text}>Email:</Text>
-                <TextInput style={styles.input} onChangeText={setEmail} placeholder="Email" />
+            
+            <View style={tw`mt-5`}>
+                <Text style={tw`text-lg font-bold text-left`}>Email:</Text>
+                <TextInput
+                    style={tw`border border-gray-300 rounded-lg p-2 mt-2`}
+                    onChangeText={setEmail}
+                    placeholder="Email"
+                />
             </View>
-            <View style={styles.viewForm} >
-                <Text style={styles.text}>Mật khẩu:</Text>
-                <TextInput style={styles.input} onChangeText={setPassword} secureTextEntry placeholder="Mật khẩu" />
+            
+            <View style={tw`mt-5`}>
+                <Text style={tw`text-lg font-bold text-left`}>Mật khẩu:</Text>
+                <TextInput
+                    style={tw`border border-gray-300 rounded-lg p-2 mt-2`}
+                    onChangeText={setPassword}
+                    secureTextEntry
+                    placeholder="Mật khẩu"
+                />
             </View>
-            <View style={styles.viewForm} >
-                <Text style={styles.text}>Xác nhận mật khẩu:</Text>
-                <TextInput style={styles.input} onChangeText={setConfirmPassword} secureTextEntry placeholder="Nhập lại mật khẩu" />
+            
+            <View style={tw`mt-5`}>
+                <Text style={tw`text-lg font-bold text-left`}>Xác nhận mật khẩu:</Text>
+                <TextInput
+                    style={tw`border border-gray-300 rounded-lg p-2 mt-2`}
+                    onChangeText={setConfirmPassword}
+                    secureTextEntry
+                    placeholder="Nhập lại mật khẩu"
+                />
             </View>
-            <TouchableOpacity style={styles.button} onPress={handleRegister}>
-                <Text style={styles.buttonText}>Đăng ký</Text>
-            </TouchableOpacity>
-            <View style={styles.viewForm} >
-                <Text style={styles.textSpan}>Bạn đã có tài khoản?</Text>
-                <TouchableOpacity onPress={openURL}>
-                    <Text style={styles.textLink}>Đăng nhập</Text>
+
+            <View style={tw`mt-5`}>
+                <Button title="Đăng ký" onPress={handleRegister} />
+            </View>
+
+            <View style={tw`mt-5 flex-row justify-center`}>
+                <Text style={tw`text-center`}>Bạn đã có tài khoản?</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Login' as never)}>
+                    <Text style={tw`text-blue-500 ml-2`}>Đăng nhập</Text>
                 </TouchableOpacity>
             </View>
         </View>
