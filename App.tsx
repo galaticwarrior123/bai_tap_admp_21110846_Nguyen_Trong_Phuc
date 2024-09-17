@@ -12,6 +12,8 @@ import HomeScreen from './src/screens/HomeScreen';
 import Register from './src/screens/baitap2Screen/register';
 import ConfirmAccount from './src/screens/baitap2Screen/confirmAccount';
 import Login from './src/screens/baitap2Screen/login';
+import ResetPassword from './src/screens/baitap2Screen/resetPassword';
+import ForgotPassword from './src/screens/baitap2Screen/forgotPassword';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -34,6 +36,9 @@ export default function App() {
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="HomeScreen" component={Root} options={{ headerShown: false }} />
         <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="ConfirmAccount" component={ConfirmAccount} />
+        <Stack.Screen name="ResetPassword" component={ResetPassword} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       </Stack.Navigator>
     </NavigationContainer>
   )

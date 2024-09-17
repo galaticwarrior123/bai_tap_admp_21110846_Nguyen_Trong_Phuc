@@ -47,7 +47,7 @@ export default function Register() {
     
 
     return (
-        <View style={tw`flex-1 p-6`}>
+        <View style={tw`flex-1 p-6 justify-center bg-white`}>
 
             
             <View style={tw`mt-5`}>

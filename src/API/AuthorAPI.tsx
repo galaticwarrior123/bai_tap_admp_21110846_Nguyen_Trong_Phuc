@@ -16,6 +16,16 @@ class AuthorAPI {
         const url = '/auth/verify';
         return axiosClient.post(url, data);
     }
+
+    static async ForgotPassword(data: any) {
+        const url = '/auth/forgot-password';
+        return axiosClient.post(url, data);
+    }
+
+    static async ResetPassword(data: any) {
+        const url = '/auth/reset-password';
+        return axiosClient.post(url, data);
+    }
 }
 
 export default AuthorAPI;
